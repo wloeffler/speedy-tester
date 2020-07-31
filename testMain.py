@@ -61,7 +61,7 @@ class DRISTestDriver:
             doesElementExist.click()
         #stops the whole test, as there is no sense of going on if the pt cant be fount
         except NoSuchElementException as Exception:
-            cls.outputfile.write("The MRN searched for of " + self.MRN + " was not found\n")
+            cls.outputfile.write("The MRN searched for of " + cls.MRN + " was not found\n")
             cls.outputfile.close()
             cls.magicMaker.close()
             #raise KeyboardInterrupt
