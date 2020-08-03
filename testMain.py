@@ -1,5 +1,5 @@
 """
-This is the testing framework built upon unit test and Selentium
+This is the testing framework built upon unit test and Selenium
 Picture Perfect 2020
 """
 
