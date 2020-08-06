@@ -91,7 +91,7 @@ class DRISTestDriver:
 
     # this calls all the test cases and passes in if they will be tested or not
     def testCaller(self):
-        self.test_ProblemListTab(self.choiceContainer)
+        self.test_ProblemListTab(self.choiceContainer.problemListSelected)
 
 
 
