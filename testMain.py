@@ -15,21 +15,24 @@ from choices import SessionInfo
 class DRISTestDriver:
 
     #ex only at first start up, sets up the whole shebang
-    def __init__(cls,choiceContainer):
+    def __init__(cls,ChoiceContainer):
+
+       # cls.choiceContainer = SessionInfo()
+        cls.choiceContainer = ChoiceContainer
         location = r"C:\Users\wloeffler\PycharmProjects\DrisTest\venv\chromedriver.exe"
         #opens the webdriver
         cls.magicMaker = webdriver.Chrome(location)
         cls.magicMaker.implicitly_wait(10)
         #the url that will initally be navigated to; be sure to include the http:// or https://
-        url = choiceContainer.drisSiteAddress
+        url = cls.choiceContainer.drisSiteAddress
         #opens the inital window
         cls.magicMaker.get(url)
         cls.magicMaker.maximize_window()
 
         #login Info
-        user = choiceContainer.userName
-        pw = choiceContainer.userPassword
-        MRN = choiceContainer.ptMrn
+        user = cls.choiceContainer.userName
+        pw = cls.choiceContainer.userPassword
+        MRN = cls.choiceContainer.ptMrn
         #finds the element then sends the key to it, then submits everything
         #for staging
         username = cls.magicMaker.find_element_by_id("UserName").send_keys(user)
@@ -69,6 +72,11 @@ class DRISTestDriver:
         #pauses execution so that DRIS can load... at time of writing its slowwwwwww
         time.sleep(10)
         print("setupclass done")
+
+
+        #begins the tests
+        cls.testCaller()
+
     # ex once at end of the end
 
     def tearDownClass(cls):
@@ -81,9 +89,20 @@ class DRISTestDriver:
         time.sleep(3.0)
         print("setup started")
 
+    # this calls all the test cases and passes in if they will be tested or not
+    def testCaller(self):
+        self.test_ProblemListTab(self.choiceContainer)
+
+
+
 #All Test cases listed below
 
-    def test_ProblemListTab(self):
+    def test_ProblemListTab(self, runOrNot):
+
+        #checks if were gonna do this or not
+        if not runOrNot:
+            self.outputfile.write("\nProblem List Tab Skipped\n")
+            return
         #selects the tab
         self.magicMaker.find_element_by_id("tabProblemList").click()
         "problemlist tab clicked"
@@ -111,6 +130,8 @@ class DRISTestDriver:
 
 
             time.sleep(3.0)
+
+        return
 
 
 """
@@ -205,4 +226,6 @@ class DRISTestDriver:
         # selects the tab
         self.magicMaker.find_element_by_id("tabDrisComments").click()
 """
+
+
 
